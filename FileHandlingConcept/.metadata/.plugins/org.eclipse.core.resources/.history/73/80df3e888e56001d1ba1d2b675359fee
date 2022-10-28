@@ -1,0 +1,242 @@
+package virtualkey;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.InputMismatchException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+
+public class FileManager extends WelcomeScreen {
+	static final String folderPath = "E:\\Simplilearn\\VirtualKeyProject\\FileHandlingConcept\\Directory\\";
+
+	Scanner in = new Scanner(System.in);
+
+	private ArrayList<String> fileoptions = new ArrayList<String>();
+
+	public FileManager() {
+		this.fileoptions.add("1. Add a new file");
+		this.fileoptions.add("2. Delete a file");
+		this.fileoptions.add("3. Search a file");
+		this.fileoptions.add("4. Back to application Main Context");
+
+	}
+
+	@Override
+	public void details() {
+		Iterator I1 = fileoptions.iterator();
+		System.out.println("Please select : ");
+		while (I1.hasNext()) {
+			System.out.println(I1.next());
+		}
+	}
+
+	@Override
+	public void getUserChoice() {
+		// TODO Auto-generated method stub
+		int ch = in.nextInt();
+		try {
+			this.fileValidOptions(ch);
+
+		} catch (InputMismatchException ime) {
+			System.out.println("Wrong Choice type : Expected choice should be of Integer type");
+		}
+	}
+
+	@Override
+	public List<String> showFiles() {
+		// TODO Auto-generated method stub
+		return super.showFiles();
+	}
+
+	@Override
+	public void fileValidOptions(int ch) {
+		// TODO Auto-generated method stub
+		switch (ch) {
+		case 1:
+			AddFile();
+			System.out.println("\n");
+
+			// Choice 1 : to get or to show all files in folder.
+//				List<String> fileNames = fl.showFiles();
+//
+//				for (String f : fileNames) {
+//					System.out.println(f);
+//				}
+//				System.out.println("\n");
+//				showFileDetails();
+//				getUserChoice();
+			break;
+		case 2:
+			DeleteFile();
+			System.out.println("\n");
+			// Choice 2 : if user wants to add new file.
+//				fl.AddFile();
+//				System.out.println("\n");
+
+			break;
+		case 3:
+			// Choice 3 : if user wants to delete a particular file from the folder.
+			searchFile();
+//				fl.DeleteFile();
+//				System.out.println("\n");
+//				showFileDetails();
+//				getUserChoice();
+			break;
+		case 4:
+			// Choice 4 : If user wants to search a particular file from the folder.
+//				fl.searchFile();
+
+			super.showFileDetails();
+			break;
+
+		default:
+			System.out.println("Invalid Option");
+		}
+	}
+
+	public void showFileDetails() {
+		Iterator I1 = fileoptions.iterator();
+		System.out.println("Please select : ");
+		while (I1.hasNext()) {
+			System.out.println(I1.next());
+		}
+
+	}
+	// lets take user choice and perform the file handling operations on the basis
+	// of choice.
+
+//	public void getUserInputChoice() {
+//
+//		int ch = in.nextInt();
+//		try {
+//			options(ch);
+//
+//		} catch (InputMismatchException ime) {
+//			System.out.println("Wrong Choice type : Expected choice should be of Integer type");
+//		}
+//	}
+
+//	private void options(int choice) {
+//		// switch case statements run according to user choice.
+//		switch (choice) {
+//		case 1:
+//			AddFile();
+//			System.out.println("\n");
+//
+//			// Choice 1 : to get or to show all files in folder.
+////				List<String> fileNames = fl.showFiles();
+////
+////				for (String f : fileNames) {
+////					System.out.println(f);
+////				}
+////				System.out.println("\n");
+////				showFileDetails();
+////				getUserChoice();
+//			break;
+//		case 2:
+//			DeleteFile();
+//			System.out.println("\n");
+//			// Choice 2 : if user wants to add new file.
+////				fl.AddFile();
+////				System.out.println("\n");
+//
+//			break;
+//		case 3:
+//			// Choice 3 : if user wants to delete a particular file from the folder.
+//			searchFile();
+////				fl.DeleteFile();
+////				System.out.println("\n");
+////				showFileDetails();
+////				getUserChoice();
+//			break;
+//		case 4:
+//			// Choice 4 : If user wants to search a particular file from the folder.
+////				fl.searchFile();
+//			WelcomeScreen sc = new WelcomeScreen();
+//			sc.showFileDetails();
+//			sc.getUserChoice();
+//			break;
+//
+//		default:
+//			System.out.println("Invalid Option");
+//		}
+//	}
+
+// Below method show all files from the mentioned folder path.
+//	public List<String> showFiles() {
+//		// creating file object
+//		File fl = new File(folderPath);
+//
+//		// getting all files into file array
+//		File[] listOfFiles = fl.listFiles();
+//
+//		// declare list to store file names
+//		List<String> fileNames = new ArrayList<String>();
+//
+//		for (File f : listOfFiles)
+//			fileNames.add(f.getName());
+//
+//		// return the list in sorting order ignore case sensitivity
+//		Collections.sort(fileNames, String.CASE_INSENSITIVE_ORDER);
+//		return fileNames;
+
+//	}
+
+	// Logic to add particular file in mentioned folder path.
+	public void AddFile() {
+		System.out.println("Please Enter the Filename:");
+		String fileName = in.nextLine();
+		System.out.println("You are adding a file named: " + fileName);
+
+		try {
+
+			File file1 = new File(folderPath + fileName);
+			if (file1.createNewFile()) {
+				System.out.println("File created: " + file1.getName());
+				showFiles().add(fileName);
+			} else {
+				System.out.println("This File Already Exists, no need to add another");
+			}
+		} catch (IOException var4) {
+			System.out.println(var4);
+		}
+
+	}
+
+	// code to delete a file from the list.
+	public void DeleteFile() {
+		System.out.println("Please Enter the Filename:");
+		String fileName = in.nextLine();
+		System.out.println("You are deleting a file named: " + fileName);
+
+		File file2 = new File(folderPath + fileName);
+		if (file2.delete()) {
+			System.out.println("Deleted File: " + file2.getName());
+			showFiles().remove(file2);
+		} else {
+			System.out.println("Failed to delete file:" + fileName + ", file was not found.");
+		}
+
+	}
+
+	// code to search a file
+	public void searchFile() {
+
+		// code for deleting file
+		String fileName;
+
+		System.out.println("Please Enter the Filename:");
+		fileName = in.nextLine();
+		System.out.println("You are searching for a file named: " + fileName);
+
+		File file3 = new File(folderPath + fileName);
+		if (file3.exists()) {
+			System.out.println("Found " + fileName);
+		} else {
+			System.out.println("File not found");
+		}
+	}
+}

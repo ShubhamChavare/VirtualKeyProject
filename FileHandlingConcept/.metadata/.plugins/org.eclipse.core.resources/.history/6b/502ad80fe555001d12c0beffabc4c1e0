@@ -1,0 +1,10 @@
+package virtualkey;
+
+public class VirtualKeyMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

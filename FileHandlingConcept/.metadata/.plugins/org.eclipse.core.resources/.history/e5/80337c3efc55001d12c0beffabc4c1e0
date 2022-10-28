@@ -1,0 +1,88 @@
+package virtualkey;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+public class FileManager {
+	static final String folderPath = "E:\\Simplilearn\\VirtualKeyProject\\FileHandlingConcept\\Directory\\";
+
+	Scanner in = new Scanner(System.in);
+
+	public static List<String> showFiles() {
+		// creating file object
+		File fl = new File(folderPath);
+
+		// getting all files into file array
+		File[] listOfFiles = fl.listFiles();
+
+		// declare list to store file names
+		List<String> fileNames = new ArrayList<String>();
+
+		for (File f : listOfFiles)
+			fileNames.add(f.getName());
+
+		// return the list in sorting order
+		Collections.sort(fileNames);
+		return fileNames;
+
+	}
+
+	// Add file
+	public void AddFile() {
+		System.out.println("Please Enter the Filename:");
+		String fileName = in.nextLine();
+		System.out.println("You are adding a file named: " + fileName);
+
+		try {
+
+			File file = new File(folderPath + fileName);
+			if (file.createNewFile()) {
+				System.out.println("File created: " + file.getName());
+				this.showFiles().add(fileName);
+			} else {
+				System.out.println("This File Already Exits, no need to add another");
+			}
+		} catch (IOException var4) {
+			System.out.println(var4);
+		}
+
+	}
+
+	// code to delete a file from the list.
+	public void DeleteFile() {
+		System.out.println("Please Enter the Filename:");
+		String fileName = in.nextLine();
+		System.out.println("You are deleting a file named: " + fileName);
+		;
+		File file1 = new File(folderPath + fileName);
+		if (file.delete()) {
+			System.out.println("Deleted File: " + file.getName());
+			this.showFiles().remove(file);
+		} else {
+			System.out.println("Failed to delete file:" + fileName + ", file was not found.");
+		}
+
+	}
+
+	// code to search a file
+	public void searchFile() {
+
+		// code for deleting file
+		String fileName;
+
+		System.out.println("Please Enter the Filename:");
+		fileName = in.nextLine();
+		System.out.println("You are searching for a file named: " + fileName);
+
+		File file2 = new File(folderPath + fileName);
+		if (file2.exists()) {
+			System.out.println("Found " + fileName);
+		} else {
+			System.out.println("File not found");
+		}
+	}
+}

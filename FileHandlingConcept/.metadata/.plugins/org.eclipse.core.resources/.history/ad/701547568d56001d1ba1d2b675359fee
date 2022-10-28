@@ -1,0 +1,97 @@
+package virtualkey;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+
+public class WelcomeScreen {
+
+	Scanner scan = new Scanner(System.in);
+
+	FileManager fl = new FileManager();
+	private ArrayList<String> options = new ArrayList<String>();
+
+	public WelcomeScreen() {
+		options.add("1. Display all files");
+		options.add("2. Add a new file");
+		options.add("3. Delete a file");
+		options.add("4. Search a file");
+		options.add("5. Exit");
+
+	}
+
+//Basic details
+	public void showFileDetails() {
+		System.out.println("###########  Locked LockedMe.com  ###########\n");
+		System.out.println("Developer Name : Shubham Chavare\n");
+		details();
+	}
+
+	public void details() {
+		Iterator f1 = options.iterator();
+		System.out.println("Please select : ");
+		while (f1.hasNext()) {
+			System.out.println(f1.next());
+		}
+
+	}
+
+//lets take user choice and perform the file handling operations on the basis of choice.
+
+	public void getUserChoice() {
+
+		int choice = scan.nextInt();
+		try {
+			fileValidOptions(choice);
+
+		} catch (InputMismatchException ime) {
+			System.out.println("Wrong Choice type : Expected choice should be of Integer type");
+		}
+	}
+
+	private void fileValidOptions(int ch) {
+		// switch case statements run according to user choice.
+		switch (ch) {
+		case 1:
+			// Choice 1 : to get or to show all files in folder.
+			List<String> fileNames = fl.showFiles();
+
+			for (String f : fileNames) {
+				System.out.println(f);
+			}
+			System.out.println("\n");
+			showFileDetails();
+			getUserChoice();
+			break;
+		case 2:
+			// Choice 2 : if user wants to add new file.
+			fl.AddFile();
+			System.out.println("\n");
+			showFileDetails();
+			getUserChoice();
+
+			break;
+		case 3:
+			// Choice 3 : if user wants to delete a particular file from the folder.
+			fl.DeleteFile();
+			System.out.println("\n");
+			showFileDetails();
+			getUserChoice();
+			break;
+		case 4:
+			// Choice 4 : If user wants to search a particular file from the folder.
+			fl.searchFile();
+
+			break;
+		case 5:
+			// Choice 5 : If user wants to close the program.
+			System.exit(0);
+			break;
+		default:
+			System.out.println("Invalid Option");
+		}
+	}
+
+}

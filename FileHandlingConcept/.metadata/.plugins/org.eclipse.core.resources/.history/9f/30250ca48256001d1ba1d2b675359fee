@@ -1,0 +1,48 @@
+package directory;
+
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class FileDirectory {
+	static final String folderPath = "E:\\Simplilearn\\VirtualKeyProject\\FileHandlingConcept\\Directory";
+	private ArrayList<File> files = new ArrayList();
+	Path path = FileSystems.getDefault().getPath("E:\\Simplilearn\\VirtualKeyProject\\FileHandlingConcept\\Directory").toAbsolutePath();
+	File dirfiles;
+
+	public FileDirectory() {
+		this.dirfiles = path.toFile();
+	}
+
+	public static String getFolderpath() {
+		return "E:\\Simplilearn\\VirtualKeyProject\\FileHandlingConcept\\Directory\\";
+	}
+
+	public void print() {
+		System.out.println("Existing Files: ");
+		this.files.forEach((f) -> {
+			System.out.println(f);
+		});
+	}
+
+	public ArrayList<File> fillFiles() {
+		File[] directoryFiles = this.dirfiles.listFiles();
+		this.files.clear();
+
+		for (int i = 0; i < directoryFiles.length; ++i) {
+			if (directoryFiles[i].isFile()) {
+				this.files.add(directoryFiles[i]);
+			}
+		}
+
+		Collections.sort(this.files);
+		return this.files;
+	}
+
+	public ArrayList<File> getFiles() {
+		this.fillFiles();
+		return this.files;
+	}
+}

@@ -1,0 +1,29 @@
+package directory;
+
+import java.io.File;
+import java.util.Iterator;
+
+public class ShowDirectory {
+
+	private static FileDirectory fd = new FileDirectory();
+
+	public static void printaAllFiles() {
+		fd.fillFiles();
+		Iterator var0 = getFd().getFiles().iterator();
+
+		while (var0.hasNext()) {
+			File file = (File) var0.next();
+			System.out.println(file.getName());
+		}
+
+	}
+
+	public static FileDirectory getFd() {
+		return fd;
+	}
+
+	public static void setFd(FileDirectory fd) {
+		ShowDirectory.fd = fd;
+	}
+
+}
